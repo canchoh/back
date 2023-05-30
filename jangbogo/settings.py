@@ -129,7 +129,7 @@ DATABASES = {
         'PASSWORD': '1541',
         'HOST': 'localhost',
         'PORT': '5434',
-        'CHARSET': 'utf8',
+
     }
 }
 # db_from_env = dj_database_url.config(conn_max_age=500)
