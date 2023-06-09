@@ -137,18 +137,17 @@ WSGI_APPLICATION = 'jangbogo.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'jangbogo',
-        'USER': 'postgres',
-        'PASSWORD': 'did1541541',
-        'HOST': 'jangbogo.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
-        'PORT': '5434',
-
+        'DATABASE_ENGINE': 'django.db.backends.postgresql_psycopg2',
+	    'DATABASE_NAME': 'jangbogo',
+	    'DATABASE_USER': 'postgres',
+	    'DATABASE_PASSWORD': 'did1541541',
+	    'DATABASE_HOST': 'jangbogo.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
+	    'DATABASE_PORT': '5434',
     }
 }
+
 # db_from_env = dj_database_url.config(conn_max_age=500)
 # DATABASES['defalt'].update(db_from_env)
 
