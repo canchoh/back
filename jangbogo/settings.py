@@ -149,8 +149,8 @@ DATABASES = {
 	    'NAME': 'jangbogo',
 	    'USER': 'postgres',
 	    'PASSWORD': 'did1541541',
-	    'HOST': 'jangbogo.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
-	    'PORT': '5434',
+	    'HOST': 'jang.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
+	    'PORT': '5432',
     }
 }
 
