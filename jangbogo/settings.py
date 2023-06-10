@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import sys, os, json
-
+from django.core.exceptions import ImproperlyConfigured
 
 
 os.environ.setdefault('LANG', 'en_US.UTF-8')
@@ -25,19 +25,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
-SECRETS_PATH = os.path.join(ROOT_DIR, '.config_secret/secrets.json')
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
-# json 파일을 python 객체로 변환
-secrets = json.loads(open(SECRETS_PATH).read())
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
 
-# json은 dict 자료형으로 변환되므로 .items() 함수를 이용해 key와 value값을 가져온다.
-# 이때 settings 모듈에 동적으로 할당한다.
-for key, value in secrets.items():
-    setattr(sys.modules[__name__], key, value)
+def get_secret(setting):
+    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+
+SECRET_KEY = get_secret("SECRET_KEY")
 
 
 
-SECRET_KEY = 'django-insecure-!54-e#ae&_x^516ki&a+9x5@on$5yi=&n7!jjo-#fo67(*5$!^'
+#SECRET_KEY = 'django-insecure-!54-e#ae&_x^516ki&a+9x5@on$5yi=&n7!jjo-#fo67(*5$!^'
 
 
 # Quick-start development settings - unsuitable for production
@@ -139,12 +145,12 @@ WSGI_APPLICATION = 'jangbogo.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'DATABASE_ENGINE': 'django.db.backends.postgresql_psycopg2',
-	    'DATABASE_NAME': 'jangbogo',
-	    'DATABASE_USER': 'postgres',
-	    'DATABASE_PASSWORD': 'did1541541',
-	    'DATABASE_HOST': 'jangbogo.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
-	    'DATABASE_PORT': '5434',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	    'NAME': 'jangbogo',
+	    'USER': 'postgres',
+	    'PASSWORD': 'did1541541',
+	    'HOST': 'jangbogo.car0pkyudjbl.ap-northeast-2.rds.amazonaws.com',
+	    'PORT': '5434',
     }
 }
 
