@@ -55,7 +55,8 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = True
-ALLOWED_HOSTS = ["13-209-120-6", "localhost"]
+ALLOWED_HOSTS = ["13.209.120.6",
+                 "localhost"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
