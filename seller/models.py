@@ -14,7 +14,7 @@ class Seller(models.Model):
 
 class Business(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    business_number = models.CharField("사업자번호",max_length=20, blank=False)
+    business = models.CharField("사업자번호",max_length=20, blank=False)
 
 
 # Create your models here.
