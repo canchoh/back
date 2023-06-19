@@ -15,14 +15,14 @@ import sys, os, json
 from django.core.exceptions import ImproperlyConfigured
 
 
-os.environ.setdefault('LANG', 'en_US.UTF-8')
-os.environ.setdefault('LC_ALL', 'en_US.UTF-8')
+# os.environ.setdefault('LANG', 'en_US.UTF-8')
+# os.environ.setdefault('LC_ALL', 'en_US.UTF-8')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+#
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
@@ -56,7 +56,8 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # DEBUG = True
 DEBUG = True
 ALLOWED_HOSTS = ["13.209.120.6",
-                 "localhost"]
+                 "localhost",
+                 "127.0.0.1"]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -76,6 +77,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'corsheaders',
     'knox',
+    'management',
 
 
 

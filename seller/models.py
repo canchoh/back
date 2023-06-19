@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+import uuid
 
 class Seller(models.Model):
 
@@ -11,7 +12,34 @@ class Seller(models.Model):
     seller_phone = models.CharField(max_length=15, blank=False)
     seller_password = models.CharField(max_length=30, blank=False)
 
+class Business(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    business_number = models.CharField("사업자번호",max_length=20, blank=False)
+
+
 # Create your models here.
+class Ceo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,)
+
+    ceo_business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    ceo_email = models.EmailField(max_length=45, blank=False)
+    ceo_name = models.CharField(max_length=20, blank=False)
+    ceo_birthday = models.CharField(max_length=20, blank=False)
+    ceo_address = models.CharField(max_length=40, blank=False)
+    ceo_phone = models.CharField(max_length=15, blank=False)
+    ceo_password = models.CharField(max_length=30, blank=False)
+    ceo_password2 = models.CharField(max_length=30, blank=False)
+
+class Market(models.Model):
+    marketkey = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,)
+    market_ceo= models.ForeignKey(Ceo, on_delete=models.CASCADE)
+    market_number = models.CharField(max_length=15)
+    market_address = models.CharField(max_length=70)
+    market_type = models.CharField(max_length=20)
+    market_content = models.CharField(max_length=500)
+
+
+
 
 
 

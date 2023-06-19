@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('jang/auth',views.obtain_auth_token),
     path('seller/', include('seller.urls')),
+    # path('management/', include('management.urls'))
     # path('rest-auth/', include('rest_auth.urls')),
 
 
