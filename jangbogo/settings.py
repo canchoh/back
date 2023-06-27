@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'corsheaders',
     'knox',
-    #'management',
+    'management',
 
 
 
