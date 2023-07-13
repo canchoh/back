@@ -11,7 +11,9 @@ router.register(r'inventory', views.InventoryViewSet)
 # router.register(r'increase', views.IncreaseViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('router/', include(router.urls)),
+    path('update/', views.updete, name='update'),
+
 
 
 ]

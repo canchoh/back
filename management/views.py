@@ -6,8 +6,9 @@ from django.http import HttpRequest
 from .sarializer import *
 from management.models import Category, Inventory
 from django.http import JsonResponse
-
-
+from django.http import HttpResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 @api_view(['POST'])
 def create_category(request):
     pass
@@ -32,6 +33,7 @@ category_detail = CategoryViewSet.as_view({
 
 @api_view(['POST'])
 # 재고 수량 증가
+
 def increase_inventory(Inventorykey, count):
     product = Inventory.objects.get(id=Inventorykey)
     inventory= Inventory.objects.get_or_create(product=product)
@@ -54,22 +56,16 @@ Inventory_detail = InventoryViewSet.as_view({
     'delete':'destroy',
 })
 
-# @api_view(['POST'])
-# def increase_inventory(request):
-#     pass
-#
-# class IncreaseViewSet(viewsets.ModelViewSet):
-#     queryset = Inventory.objects.all()
-#     serializer_class = increase_inventory
-#
-#
-# Inventory_list = IncreaseViewSet.as_view({
-#     'get':'list',
-#     'post':'create',
-# })
-#
-# Inventory_detail = IncreaseViewSet.as_view({
-#     'get':'retrieve',
-#     'patch':'p[partial_update',
-#     'delete':'destroy',
-# })
+@csrf_exempt
+def updete(request):
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        print(json_data)
+
+        response_data = {'message': 'Data received successfully.'}
+
+        return JsonResponse(response_data)
+
+
+
+
