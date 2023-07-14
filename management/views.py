@@ -56,26 +56,17 @@ Inventory_detail = InventoryViewSet.as_view({
     'delete':'destroy',
 })
 
-# @csrf_exempt
-# def updete(request):
-#     if request.method == 'POST':
-#         json_data = json.loads(request.body)
-#         Inventory.save()
-#         print(json_data)
-#
-#         response_data = {'message': 'Data received successfully.'}
-#
-#         return JsonResponse(response_data)
+@csrf_exempt
+def updete(request):
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        inventory = Inventory(**json_data)  # Inventory 모델에 데이터 저장
+        inventory.save()
 
-@api_view(['POST'])
-def updete(request, barcode):
-    barcode = Inventory.objects.get(id= barcode)
-    count = request.POST['count']
-    barcode.save()
+        response_data = {'message': 'Data received successfully.'}
 
-    response_data = {'message': 'Data received successfully.'}
+        return JsonResponse(response_data)
 
-    return JsonResponse(response_data)
 
 
 
