@@ -17,6 +17,8 @@ class InventorySerializer(serializers.ModelSerializer):
 
 
 
+
+
 # 재고 수량 증가
 def increase_inventory(Inventorykey, count):
     product = Inventory.objects.get(id=Inventorykey)

@@ -14,14 +14,14 @@ class Category(models.Model):
 class Inventory(models.Model):
     Inventorykey = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     inventoryforeignkey = models.ForeignKey(Category, on_delete=models.CASCADE)
-    barcode = models.IntegerField()
-    Inventory_name = models.CharField(max_length=30)
-    Inventory_price = models.IntegerField()
-    origin=models.CharField(max_length=30)
+    barcode = models.IntegerField(blank= True, null= True)
+    Inventory_name = models.CharField(max_length=30,blank= True, null= True)
+    Inventory_price = models.IntegerField(blank= True, null= True)
+    origin=models.CharField(max_length=30,blank= True, null= True)
     weight= models.CharField("무게(g)",max_length=20, blank= True, null= True)
     count= models.IntegerField("수량(갯수)",blank= True, null= True)
-    manufacture = models.CharField(max_length=20)
-    sale =models.BooleanField()
+    manufacture = models.CharField(max_length=20, blank= True, null= True)
+    sale = models.BooleanField(blank= True, null= True)
 
 
 
