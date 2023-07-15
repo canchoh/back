@@ -60,16 +60,13 @@ Inventory_detail = InventoryViewSet.as_view({
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
-        if isinstance(json_data, dict):  # 딕셔너리 형태인지 확인
-            inventory = Inventory(**json_data)
-            inventory.save()
+        Inventory.save()
+        print(json_data)
 
-            response_data = {'message': 'Data received successfully.'}
+        response_data = {'message': 'Data received successfully.'}
 
-            return JsonResponse(response_data)
-        else:
-            response_data = {'message': 'Invalid JSON data.'}
-            return JsonResponse(response_data, status=400)
+        return JsonResponse(response_data)
+
 
 
 
