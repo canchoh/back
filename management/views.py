@@ -103,6 +103,7 @@ def delete_inventory(request, id):
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
+
         for item in json_data:
             inventory = item.get('inventory')
         for item in json_data:
@@ -110,8 +111,11 @@ def updete(request):
         for item in json_data:
             count = item.get('count')
 
+
         serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
         if serializer.is_valid():
+            print(json_data)
+
 
             serializer.save()
 
