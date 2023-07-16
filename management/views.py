@@ -103,7 +103,8 @@ def delete_inventory(request, id):
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
-        inventory = json_data.get('inventory')
+        for item in json_data:
+            inventory = item.get('inventory')
         barcode = json_data.get('barcode')
         count = json_data.get('count')
 
