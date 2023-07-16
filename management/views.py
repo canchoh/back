@@ -56,16 +56,72 @@ Inventory_detail = InventoryViewSet.as_view({
     'delete':'destroy',
 })
 
+from django.shortcuts import get_object_or_404
+
+
+
+@api_view(['DELETE'])
+def delete_inventory(request, id):
+    inventory = get_object_or_404(Inventory, id=id)
+
+    # 권한 검사 (예: 해당 Inventory에 대한 권한 확인)
+    if not request.user.has_perm('app.delete_inventory'):
+        # 권한이 없는 경우 에러 응답 반환
+        return HttpResponse(status=403)
+
+    # Inventory 삭제
+    inventory.delete()
+
+    # 삭제 완료 메시지 또는 다른 응답 반환
+    return HttpResponse("Inventory 삭제 완료")
+
+
+
+# def delete(request, Inventorykey):
+#     # Inventory 객체가 존재하지 않을 경우 404 응답 반환
+#     delete_inventory = get_object_or_404(Inventory, id=Inventorykey)
+#
+#     # 권한 및 인증 검사
+#     if not request.user.is_authenticated:
+#         # 인증되지 않은 사용자일 경우 401 Unauthorized 응답 반환
+#         return HttpResponse(status=401)
+#
+#     # 권한 검사 (예: 해당 Inventory에 대한 권한 확인)
+#     if not request.user.has_perm('app.delete_inventory'):
+#         # 권한이 없는 경우 403 Forbidden 응답 반환
+#         return HttpResponse(status=403)
+#
+#     # Inventory 삭제
+#     delete_inventory.delete()
+#
+#     # 삭제 완료 메시지 또는 다른 응답 반환
+#     return HttpResponse("Inventory 삭제 완료")
+#
+
+# @csrf_exempt
+# def updete(request):
+#     if request.method == 'POST':
+#         json_data = json.loads(request.body)
+#         serializer = InventorySerializer(data=request.json_data)
+#         serializer.save()
+#         print(json_data)
+#
+#         response_data = {'message': 'Data received successfully.'}
+#
+#         return JsonResponse(response_data)
 @csrf_exempt
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
-        Inventory.save()
-        print(json_data)
+        serializer = InventorySerializer(data=json_data)
+        if serializer.is_valid():
+            serializer.save()
+            print(json_data)
 
-        response_data = {'message': 'Data received successfully.'}
+            response_data = {'message': 'Data received successfully.'}
+            return JsonResponse(response_data)
 
-        return JsonResponse(response_data)
+
 
 
 
