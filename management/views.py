@@ -106,9 +106,9 @@ def updete(request):
         for item in json_data:
             inventory = item.get('inventory')
         for item in json_data:
-            barcode = json_data.get('barcode')
+            barcode = item.get('barcode')
         for item in json_data:
-            count = json_data.get('count')
+            count = item.get('count')
 
         serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
         if serializer.is_valid():
