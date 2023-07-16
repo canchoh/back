@@ -99,34 +99,23 @@ def delete_inventory(request, id):
 #     return HttpResponse("Inventory 삭제 완료")
 #
 
-# @csrf_exempt
-# def updete(request):
-#     if request.method == 'POST':
-#         json_data = json.loads(request.body)
-#         serializer = InventorySerializer(data=request.json_data)
-#         serializer.save()
-#         print(json_data)
-#
-#         response_data = {'message': 'Data received successfully.'}
-#
-#         return JsonResponse(response_data)
-@api_view(['POST'])
+
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
-        serializer = InventorySerializer(data=json_data)
+        inventory = json_data.get('inventory')
+        barcode = json_data.get('barcode')
+        count = json_data.get('count')
+
+        serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
         if serializer.is_valid():
+
             serializer.save()
-            print(json_data)
-            response_data = {'message': 'Data received successfully.'}
-            return JsonResponse(response_data)
-        else:
-            # 유효하지 않은 데이터에 대한 처리
-            response_data = {'message': 'Invalid data.'}
-            return JsonResponse(response_data, status=400)
+
+        return HttpResponse('Data saved successfully.')
     else:
-        # POST 메소드가 아닌 경우에는 허용되지 않음을 응답
-        return HttpResponseNotAllowed(['POST'])
+        return HttpResponse('Invalid request method.')
+
 
 
 
