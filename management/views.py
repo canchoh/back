@@ -99,7 +99,7 @@ def delete_inventory(request, id):
 #     return HttpResponse("Inventory 삭제 완료")
 #
 
-
+@csrf_exempt
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
