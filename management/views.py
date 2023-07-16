@@ -8,6 +8,7 @@ from management.models import Category, Inventory
 from django.http import JsonResponse
 from django.http import HttpResponse
 import json
+from django.http import HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 @api_view(['POST'])
 def create_category(request):
@@ -109,7 +110,7 @@ def delete_inventory(request, id):
 #         response_data = {'message': 'Data received successfully.'}
 #
 #         return JsonResponse(response_data)
-@csrf_exempt
+@api_view(['POST'])
 def updete(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
@@ -117,9 +118,16 @@ def updete(request):
         if serializer.is_valid():
             serializer.save()
             print(json_data)
-
             response_data = {'message': 'Data received successfully.'}
             return JsonResponse(response_data)
+        else:
+            # 유효하지 않은 데이터에 대한 처리
+            response_data = {'message': 'Invalid data.'}
+            return JsonResponse(response_data, status=400)
+    else:
+        # POST 메소드가 아닌 경우에는 허용되지 않음을 응답
+        return HttpResponseNotAllowed(['POST'])
+
 
 
 
