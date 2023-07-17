@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
+# from user.models import User
 
 class Seller(models.Model):
 
@@ -15,6 +16,7 @@ class Seller(models.Model):
 class Business(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.CharField("사업자번호",max_length=20, blank=False)
+
 
 
 # Create your models here.
@@ -34,9 +36,11 @@ class Market(models.Model):
     marketkey = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,)
     market_ceo= models.ForeignKey(Ceo, on_delete=models.CASCADE)
     market_number = models.CharField(max_length=15)
+
     market_address = models.CharField(max_length=70)
     market_type = models.CharField(max_length=20)
     market_content = models.CharField(max_length=500)
+    market_name = models.CharField(max_length=45, blank=True, null=True)
 
 
 
