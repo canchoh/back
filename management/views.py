@@ -110,19 +110,19 @@ def updete(request):
             barcode = item.get('barcode')
             count = item.get('count')
 
-            # barcode = Inventory.objects.get(barcode=barcode)
-            # count = Inventory.objects.get(count=count)
-            # comment_obj = Inventory(barcode=barcode, count=count)
-            # comment_obj.save()
+    Inventory.objects.filter(barcode=barcode).update(count=count)
 
 
-        serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
-        if serializer.is_valid():
-            serializer.save()
 
-        return HttpResponse('Data saved successfully.')
-    else:
-        return HttpResponse('Invalid request method.')
+
+        # serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
+        # if serializer.is_valid():
+        #     serializer.save()
+
+    #     return HttpResponse('Data saved successfully.')
+    # else:
+    #
+    #     return HttpResponse('Invalid request method.')
 
 
 
