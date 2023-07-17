@@ -113,6 +113,10 @@ def updete(request):
     Inventory.objects.filter(barcode=barcode).update(count=count)
 
 
+    return HttpResponse("Inventory 수정 완료")  # 빈 HttpResponse 객체 반환
+
+
+
 
 
         # serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
