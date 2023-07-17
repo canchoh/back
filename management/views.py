@@ -106,21 +106,19 @@ def updete(request):
         print(json_data)
 
         for item in json_data:
-            inventory = item.get('inventory')
-        for item in json_data:
+
             barcode = item.get('barcode')
-        for item in json_data:
             count = item.get('count')
 
-            barcode = Inventory.objects.get(barcode="바코드")
-            count = Inventory.objects.get(count="수량(갯수)")
-            comment_obj = Inventory(barcode=barcode, count=count)
-            comment_obj.save()
+            # barcode = Inventory.objects.get(barcode=barcode)
+            # count = Inventory.objects.get(count=count)
+            # comment_obj = Inventory(barcode=barcode, count=count)
+            # comment_obj.save()
 
 
-        # serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
-        # if serializer.is_valid():
-        #     serializer.save()
+        serializer = InventorySerializer(data={'barcode': barcode, 'count': count})
+        if serializer.is_valid():
+            serializer.save()
 
         return HttpResponse('Data saved successfully.')
     else:
