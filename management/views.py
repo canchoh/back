@@ -118,10 +118,18 @@ from django.shortcuts import get_object_or_404
 #         return Response(serializer.data)
 
 
+import json
+from rest_framework.response import Response
+
 @api_view(['GET', 'DELETE'])
 def delete(request):
     if request.method == 'DELETE':
-        json_data = json.loads(request.body)
+        try:
+            json_data = json.loads(request.body)
+        except json.JSONDecodeError:
+            # JSON 디코딩 오류가 발생할 경우 처리
+            return Response({"error": "Invalid JSON data"}, status=400)
+
         deleted_objects = []
         for item in json_data:
             barcode = item.get('barcode')
@@ -136,10 +144,11 @@ def delete(request):
         # Response serialized data.
         return Response(serializer.data)
     elif request.method == 'GET':
-        queryset= Inventory.objects.all()
+        queryset = Inventory.objects.all()
         serializer = DeleteSerializer(queryset, many=True)
         # Response serialized data.
         return Response(serializer.data)
+
 
 
 
