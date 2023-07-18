@@ -8,6 +8,8 @@ from . import views
 router = DefaultRouter()
 router.register(r'category', views.CategoryViewSet)
 router.register(r'inventory', views.InventoryViewSet)
+# router.register(r'product', views.ProductViewSet)
+
 # router.register(r'increase', views.IncreaseViewSet)
 
 urlpatterns = [
@@ -15,7 +17,6 @@ urlpatterns = [
     path('update/', views.updete, name='update'),
     path('delete/', views.delete, name='delete'),
     path('delete2/', views.delete_inventory, name='delete_inventory'),
-    path('product/',views.product),
 
 
 
