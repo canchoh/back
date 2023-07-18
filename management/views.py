@@ -10,6 +10,7 @@ from django.http import HttpResponse
 import json
 from django.http import HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
 @api_view(['POST'])
 def create_category(request):
     pass
@@ -97,24 +98,49 @@ Inventory_detail = InventoryViewSet.as_view({
 
 from django.shortcuts import get_object_or_404
 
+# @api_view(['GET', 'DELETE'])
+# def delete(request):
+#     if request.method == 'DELETE':
+#         json_data = json.loads(request.body)
+#         print(json_data)
+#         for item in json_data:
+#             barcode = item.get('barcode')
+#         queryset = Inventory.objects.filter(barcode=barcode).delete()
+#         serializer = DeleteSerializer(queryset, many=True)
+#
+#         # Response serialized data.
+#         return Response(serializer.data)
+#     elif request.method == 'GET':
+#         queryset= Inventory.objects.all()
+#         serializer = DeleteSerializer(queryset, many=True)
+#
+#         # Response serialized data.
+#         return Response(serializer.data)
+
+
 @api_view(['GET', 'DELETE'])
 def delete(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
-        print(json_data)
+        deleted_objects = []
         for item in json_data:
             barcode = item.get('barcode')
-        queryset = Inventory.objects.filter(barcode=barcode).delete()
-        serializer = DeleteSerializer(queryset, many=True)
+            try:
+                inventory = Inventory.objects.get(barcode=barcode)
+                inventory.delete()
+                deleted_objects.append(inventory)
+            except Inventory.DoesNotExist:
+                pass
 
+        serializer = DeleteSerializer(deleted_objects, many=True)
         # Response serialized data.
         return Response(serializer.data)
     elif request.method == 'GET':
         queryset= Inventory.objects.all()
         serializer = DeleteSerializer(queryset, many=True)
-
         # Response serialized data.
         return Response(serializer.data)
+
 
 
 
@@ -190,7 +216,9 @@ def updete(request):
     #
     #     return HttpResponse('Invalid request method.')
 
-
+class PostLikeAPIView(UpdateAPIView):
+  queryset = Inventory.objects.all()
+  serializer_class = InventorySerializer
 
 
 
