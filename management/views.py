@@ -101,6 +101,7 @@ from django.shortcuts import get_object_or_404
 def delete(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
+        print(json_data)
         for item in json_data:
 
             barcode = item.get('barcode')
