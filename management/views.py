@@ -30,23 +30,13 @@ category_detail = CategoryViewSet.as_view({
 })
 # Create your views here.
 
-@api_view(['POST'])
-def product(request, sale):
-    if sale == True:
-        class InventoryViewSet(viewsets.ModelViewSet):
-            queryset = Inventory.objects.all()
-            serializer_class = InventorySerializer
+# @api_view(['POST'])
+# def product(request):
+#
+#     queryset = Inventory.objects.filter(sale=True)
+#     serializer_class = ProductSerializer
 
-        Product_list = InventoryViewSet.as_view({
-            'get': 'list',
-            'post': 'create',
-        })
 
-        Product_detail = InventoryViewSet.as_view({
-            'get': 'retrieve',
-            'patch': 'p[partial_update',
-            'delete': 'destroy',
-        })
 
 
 
@@ -81,8 +71,9 @@ Inventory_detail = InventoryViewSet.as_view({
 from django.shortcuts import get_object_or_404
 
 @api_view(['DELETE'])
-def delete(request, pk):
-    Inventory.objects.filter(Inventorykey=pk).delete()
+def delete(request, Inventorykey):
+    Inventory.objects.filter(Inventorykey=Inventorykey).delete()
+
 
     return HttpResponse("Inventory 삭제 완료")
 
