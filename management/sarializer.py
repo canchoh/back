@@ -20,6 +20,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = \
             '__all__'
 
+class DeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inventory
+        fields = \
+            '__all__'
+
 
 
 

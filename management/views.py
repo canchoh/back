@@ -97,12 +97,31 @@ Inventory_detail = InventoryViewSet.as_view({
 
 from django.shortcuts import get_object_or_404
 
-@api_view(['DELETE'])
-def delete(request, barcode):
-    Inventory.objects.filter(barcode=barcode).delete()
+@api_view(['GET', 'DELETE'])
+def delete(request):
+    if request.method == 'DELETE':
+        json_data = json.loads(request.body)
+        barcode = json_data.get('barcode')
 
 
-    return HttpResponse("Inventory 삭제 완료")
+
+
+        queryset = Inventory.objects.filter(barcode=barcode).delete()
+        serializer = DeleteSerializer(queryset, many=True)
+
+        # Response serialized data.
+        return Response(serializer.data)
+
+
+
+    elif request.method == 'GET':
+        queryset= Inventory.objects.all()
+        serializer = DeleteSerializer(queryset, many=True)
+
+        # Response serialized data.
+        return Response(serializer.data)
+
+
 
 
 
