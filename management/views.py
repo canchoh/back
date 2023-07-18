@@ -131,7 +131,7 @@ def delete(request):
         if isinstance(json_data, dict):  # 딕셔너리인지 확인
             barcode = json_data.get('barcode')
             try:
-                inventory = Inventory.objects.get(barcode=barcode)
+                inventory = Inventory.objects.filter(barcode=barcode)
                 inventory.delete()
                 deleted_objects.append(inventory)
             except Inventory.DoesNotExist:
