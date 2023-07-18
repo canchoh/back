@@ -14,6 +14,11 @@ class InventorySerializer(serializers.ModelSerializer):
         model = Inventory
         fields = \
             '__all__'
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inventory
+        fields = \
+            '__all__'
 
 
 
