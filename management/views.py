@@ -44,7 +44,7 @@ category_detail = CategoryViewSet.as_view({
 
 
 
-@api_view(['GET', 'PATH'])
+@api_view(['GET', 'PATCH'])
 def product(request):
     if request.method == 'GET':
         # Retrieve products for which 'sale' is True.
@@ -56,7 +56,7 @@ def product(request):
         # Response serialized data.
         return Response(serializer.data)
 
-    elif request.method == 'PATH':
+    elif request.method == 'PATCH':
         # Handle POST request (same as the original code).
         queryset = Inventory.objects.filter(sale=True)
         serializer = ProductSerializer(queryset, many=True)
