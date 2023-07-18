@@ -13,7 +13,8 @@ router.register(r'inventory', views.InventoryViewSet)
 urlpatterns = [
     path('router/', include(router.urls)),
     path('update/', views.updete, name='update'),
-    path('delete/', views.delete_inventory, name='delete_inventory'),
+    path('delete/', views.delete, name='delete'),
+    path('delete2/', views.delete_inventory, name='delete_inventory'),
 
 
 

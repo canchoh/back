@@ -59,10 +59,16 @@ Inventory_detail = InventoryViewSet.as_view({
 
 from django.shortcuts import get_object_or_404
 
+@api_view(['DELETE'])
+def delete(request, pk):
+    Inventory.objects.filter(Inventorykey=pk).delete()
+
+    return HttpResponse("Inventory 삭제 완료")
+
 
 
 @api_view(['DELETE'])
-def delete_inventory(request, id):
+def delete_inventory(request, barcode):
     inventory = get_object_or_404(Inventory, id=id)
 
     # 권한 검사 (예: 해당 Inventory에 대한 권한 확인)
