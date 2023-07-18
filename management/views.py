@@ -30,6 +30,27 @@ category_detail = CategoryViewSet.as_view({
 })
 # Create your views here.
 
+@api_view(['POST'])
+def product(request, sale):
+    if sale == True:
+        class InventoryViewSet(viewsets.ModelViewSet):
+            queryset = Inventory.objects.all()
+            serializer_class = InventorySerializer
+
+        Product_list = InventoryViewSet.as_view({
+            'get': 'list',
+            'post': 'create',
+        })
+
+        Product_detail = InventoryViewSet.as_view({
+            'get': 'retrieve',
+            'patch': 'p[partial_update',
+            'delete': 'destroy',
+        })
+
+
+
+
 
 
 @api_view(['POST'])
@@ -81,6 +102,9 @@ def delete_inventory(request, barcode):
 
     # 삭제 완료 메시지 또는 다른 응답 반환
     return HttpResponse("Inventory 삭제 완료")
+
+
+
 
 
 
