@@ -32,9 +32,36 @@ category_detail = CategoryViewSet.as_view({
 
 # @api_view(['POST'])
 # def product(request):
-#
+#     # 'sale'이 True인 제품들을 조회합니다.
 #     queryset = Inventory.objects.filter(sale=True)
-#     serializer_class = ProductSerializer
+#
+#     # 조회한 제품들을 시리얼라이저에 전달하여 직렬화합니다.
+#     serializer = ProductSerializer(queryset, many=True)
+#
+#     # 직렬화된 데이터를 응답합니다.
+#     return Response(serializer.data)
+
+
+
+
+@api_view(['GET', 'POST'])
+def product(request):
+    if request.method == 'GET':
+        # Retrieve products for which 'sale' is True.
+        queryset = Inventory.objects.filter(sale=True)
+
+        # Pass the retrieved products to the serializer to serialize them.
+        serializer = ProductSerializer(queryset, many=True)
+
+        # Response serialized data.
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        # Handle POST request (same as the original code).
+        queryset = Inventory.objects.filter(sale=True)
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 
 
@@ -71,8 +98,8 @@ Inventory_detail = InventoryViewSet.as_view({
 from django.shortcuts import get_object_or_404
 
 @api_view(['DELETE'])
-def delete(request, Inventorykey):
-    Inventory.objects.filter(Inventorykey=Inventorykey).delete()
+def delete(request, barcode):
+    Inventory.objects.filter(barcode=barcode).delete()
 
 
     return HttpResponse("Inventory 삭제 완료")

@@ -16,6 +16,7 @@ urlpatterns = [
     path('router/', include(router.urls)),
     path('update/', views.updete, name='update'),
     path('delete/', views.delete, name='delete'),
+    path('product/', views.product),
     path('delete2/', views.delete_inventory, name='delete_inventory'),
 
 
