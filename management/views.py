@@ -44,7 +44,7 @@ category_detail = CategoryViewSet.as_view({
 
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PATH'])
 def product(request):
     if request.method == 'GET':
         # Retrieve products for which 'sale' is True.
@@ -56,7 +56,7 @@ def product(request):
         # Response serialized data.
         return Response(serializer.data)
 
-    elif request.method == 'POST':
+    elif request.method == 'PATH':
         # Handle POST request (same as the original code).
         queryset = Inventory.objects.filter(sale=True)
         serializer = ProductSerializer(queryset, many=True)
@@ -103,21 +103,12 @@ def delete(request):
         json_data = json.loads(request.body)
         print(json_data)
         for item in json_data:
-
             barcode = item.get('barcode')
-
-
-
-
-
         queryset = Inventory.objects.filter(barcode=barcode).delete()
         serializer = DeleteSerializer(queryset, many=True)
 
         # Response serialized data.
         return Response(serializer.data)
-
-
-
     elif request.method == 'GET':
         queryset= Inventory.objects.all()
         serializer = DeleteSerializer(queryset, many=True)
