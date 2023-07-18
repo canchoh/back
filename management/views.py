@@ -125,20 +125,21 @@ from rest_framework.response import Response
 def delete(request):
     if request.method == 'DELETE':
         try:
-            json_data = json.loads(request.body)
+            json_data = json.loads(request.body)  # 문자열을 딕셔너리로 변환
         except json.JSONDecodeError:
             # JSON 디코딩 오류가 발생할 경우 처리
             return Response({"error": "Invalid JSON data"}, status=400)
 
         deleted_objects = []
         for item in json_data:
-            barcode = item.get('barcode')
-            try:
-                inventory = Inventory.objects.get(barcode=barcode)
-                inventory.delete()
-                deleted_objects.append(inventory)
-            except Inventory.DoesNotExist:
-                pass
+            if isinstance(item, dict):  # 딕셔너리인지 확인
+                barcode = item.get('barcode')
+                try:
+                    inventory = Inventory.objects.get(barcode=barcode)
+                    inventory.delete()
+                    deleted_objects.append(inventory)
+                except Inventory.DoesNotExist:
+                    pass
 
         serializer = DeleteSerializer(deleted_objects, many=True)
         # Response serialized data.
@@ -148,6 +149,7 @@ def delete(request):
         serializer = DeleteSerializer(queryset, many=True)
         # Response serialized data.
         return Response(serializer.data)
+
 
 
 
